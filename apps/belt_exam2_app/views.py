@@ -20,18 +20,23 @@ def success(request):
     current_user = currentUser(request)
     other_users = User.objects.exclude(id=current_user.id)
     users_poked_me = len(current_user.poked_by.values_list('poker_id', flat=True).distinct().exclude(id=current_user.id))
-    my_pokes = list(Poke.objects.annotate(num_pokes=Count('poker', distinct=True)).filter(pokee=current_user).order_by('-num_pokes'))
-    pokes = current_user.poked_by.all()
-
-    print my_pokes
+    # my_pokes = list(Poke.objects.annotate(num_pokes=Count('poker', distinct=True)).filter(pokee=current_user).order_by('-num_pokes'))
+    # pokes = current_user.poked_by.all()
+    poking_count = current_user.poked_by.values('poker').annotate(num_pokes=Count('poker')).order_by('-num_pokes')
+    poked_by = []
+    for poker in poking_count:
+        poked_by.append({
+        'user': User.objects.get(id=poker['poker']),
+        'num_pokes': poker['num_pokes'],
+    })
     
 
     content = {
         'other_users': other_users,
         'current_user': current_user,
         'users_poked_me': users_poked_me,
-        'pokes': pokes,
-        'my_pokes': my_pokes
+        'poked_by': poked_by
+        
     }
 
     

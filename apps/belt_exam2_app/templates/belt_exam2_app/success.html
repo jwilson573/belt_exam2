@@ -9,16 +9,19 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'belt_exam2_app/css/styles.css'%}"/>
     </head>
+
     <body>
         <h1>Welcome {{current_user.alias}}</h1>
         <p>{{users_poked_me}} person(s) poked you!</p>
 
         <div id='pokers'>
             <!-- for loop goes here showing who all has poked you and how many times -->
-            {% for user in my_pokes %}
+            {% for user in poked_by %}
             
-                <p>{{user.poker.name}} poked you {{ user.num_pokes }} time(s)</p>
+                <p>{{user.user.name}} poked you {{ user.num_pokes }} time(s)</p>
             {% endfor %}
         </div>
 

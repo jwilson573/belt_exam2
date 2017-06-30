@@ -1,0 +1,10 @@
+input, label{
+    display: block
+}
+form{
+    margin-bottom: 10px;
+}
+
+table{
+    border: 1px solid black;
+}
