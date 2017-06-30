@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'belt_exam_app/css/styles.css'%}"/>
+    </head>
+    <body>
+        <h1>User Registration</h1>
+        {% if messages %}
+        <ul class='messages'>
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags}}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form action='/create_user' method='post'>
+            {% csrf_token %}
+            <label>Name:</label>
+            <input type='text' name='name'>
+
+            <label>Alias:</label>
+            <input type='text' name='alias'>
+
+            <label>Email:</label>
+            <input type='email' name='email'>
+
+            <label>Password:</label>
+            <input type='password' name='password'>
+
+            <label>Confirm Password:</label>
+            <input type='password' name='pwconfirm'>
+
+            <label>Date of Birth:</label>
+            <input type='date' name='DOB'>
+
+            <input type='submit' value='Register'>
+        </form>
+
+        <form action='/login' method='post'>
+            {% csrf_token %}
+            <label>Username:</label>
+            <input type='text' name='userlogin'>
+
+            <label>Password:</label>
+            <input type='password' name='passlogin'>
+
+            <input type='submit' value='Login'>
+        </form>
+    </body>
+</html>

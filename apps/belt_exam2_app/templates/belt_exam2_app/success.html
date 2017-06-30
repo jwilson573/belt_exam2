@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Welcome {{current_user.alias}}</h1>
+        <p>{{users_poked_me}} person(s) poked you!</p>
+
+        <div id='pokers'>
+            <!-- for loop goes here showing who all has poked you and how many times -->
+            {% for user in my_pokes %}
+            
+                <p>{{user.poker.name}} poked you {{ user.num_pokes }} time(s)</p>
+            {% endfor %}
+        </div>
+
+        <p>People you may want to poke:</p>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Alias</th>
+                <th>Email Address</th>
+                <th>Poke History</th>
+                <th>Action</th>
+            </tr>
+            <!--For loop goes here showing who I can poke-->
+            {% for user in other_users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.alias }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.poked_by.all|length }}</td>
+                    <td>
+                        <form action='/poke/{{user.id}}' method='post'>
+                        {% csrf_token %}
+                            <input type='submit' value='Poke'>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+                    
+
+
+
+
+        </table>
+        <a href='/logout'>Logout</a>
+        
+    </body>
+</html>
